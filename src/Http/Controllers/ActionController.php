@@ -1,9 +1,9 @@
 <?php
 
-namespace Alexwenzel\DependencyContainer\Http\Controllers;
+namespace Xamani\DependencyContainer\Http\Controllers;
 
-use Alexwenzel\DependencyContainer\ActionHasDependencies;
-use Alexwenzel\DependencyContainer\Http\Requests\ActionRequest;
+use Xamani\DependencyContainer\ActionHasDependencies;
+use Xamani\DependencyContainer\Http\Requests\ActionRequest;
 use Laravel\Nova\Http\Requests\ActionRequest as NovaActionRequest;
 use Laravel\Nova\Http\Controllers\ActionController as NovaActionController;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Alexwenzel\DependencyContainer;
+namespace Xamani\DependencyContainer;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
@@ -27,7 +27,7 @@ class FieldServiceProvider extends ServiceProvider
         Event::listen(NovaServiceProviderRegistered::class, function () {
             app()->bind(
                 \Laravel\Nova\Http\Controllers\ActionController::class,
-                \Alexwenzel\DependencyContainer\Http\Controllers\ActionController::class
+                \Xamani\DependencyContainer\Http\Controllers\ActionController::class
             );
         });
     }

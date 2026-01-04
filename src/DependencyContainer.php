@@ -1,11 +1,7 @@
 <?php
 
-namespace Alexwenzel\DependencyContainer;
+namespace Xamani\DependencyContainer;
 
-use Aqjw\MedialibraryField\Fields\Medialibrary;
-use Aqjw\MedialibraryField\Fields\Support\MediaCollectionRules;
-use BackedEnum;
-use Illuminate\Support\Arr;
 use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Illuminate\Support\Str;
@@ -299,12 +295,12 @@ class DependencyContainer extends Field
         foreach ($this->meta['dependencies'] as $index => $dependency) {
 
             // dependsOnEmpty
-            if (array_key_exists('empty', $dependency) && empty($request->has($dependency['property']))) {
+            if (array_key_exists('empty', $dependency) && blank($request->input($dependency['property']))) {
                 $satisfiedCounts++;
             }
 
             // dependsOnNotEmpty
-            if (array_key_exists('notEmpty', $dependency) && !empty($request->has($dependency['property']))) {
+            if (array_key_exists('notEmpty', $dependency) && $request->filled($dependency['property'])) {
                 $satisfiedCounts++;
             }
 
@@ -336,7 +332,7 @@ class DependencyContainer extends Field
                 && !array_key_exists('in', $dependency)
                 && !array_key_exists('notin', $dependency)
                 && !array_key_exists('nullOrZero', $dependency)) {
-                if ($dependency['value'] instanceof BackedEnum) {
+                if (interface_exists(\BackedEnum::class) && $dependency['value'] instanceof \BackedEnum) {
                     if ($dependency['value']->value == $request->get($dependency['property'])) {
                         $satisfiedCounts++;
                     }
@@ -374,10 +370,14 @@ class DependencyContainer extends Field
             // if field is DependencyContainer, then add rules from dependant fields
             if ($field instanceof DependencyContainer && $methodName === "getRules") {
                 $fieldsRules[Str::random()] = $field->getSituationalRulesSet($request, $methodName);
-            } elseif ($field instanceof Medialibrary) {
+            } elseif (
+                class_exists(\Aqjw\MedialibraryField\Fields\Medialibrary::class)
+                && class_exists(\Aqjw\MedialibraryField\Fields\Support\MediaCollectionRules::class)
+                && $field instanceof \Aqjw\MedialibraryField\Fields\Medialibrary
+            ) {
                 $rules = $field->{$methodName}($request);
 
-                $fieldsRules[$field->attribute] = MediaCollectionRules::make(
+                $fieldsRules[$field->attribute] = \Aqjw\MedialibraryField\Fields\Support\MediaCollectionRules::make(
                     $rules,
                     $request,
                     $field,

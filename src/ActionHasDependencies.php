@@ -1,6 +1,6 @@
 <?php
 
-namespace Alexwenzel\DependencyContainer;
+namespace Xamani\DependencyContainer;
 
 use Laravel\Nova\Http\Requests\ActionRequest;
 use Illuminate\Support\Facades\Validator;
@@ -9,11 +9,11 @@ trait ActionHasDependencies
 {
     use HasChildFields;
 
-    protected function fieldsForValidation(ActionRequest $request)
+    protected function fieldsForValidation(ActionRequest $request): array
     {
         $availableFields = [];
 
-        foreach ($this->fields() as $field) {
+        foreach ($this->actionFields($request) as $field) {
             if ($field instanceof DependencyContainer) {
                 // do not add any fields for validation if container is not satisfied
                 if ($field->areDependenciesSatisfied($request)) {
@@ -28,6 +28,17 @@ trait ActionHasDependencies
         if ($this->childFieldsArr) {
             $availableFields = array_merge($availableFields, $this->childFieldsArr);
         }
+
+        return $availableFields;
+    }
+
+    protected function actionFields(ActionRequest $request): array
+    {
+        $reflection = new \ReflectionMethod($this, 'fields');
+
+        return $reflection->getNumberOfParameters() > 0
+            ? $this->fields($request)
+            : $this->fields();
     }
 
     /**

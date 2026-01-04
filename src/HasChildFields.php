@@ -1,6 +1,6 @@
 <?php
 
-namespace Alexwenzel\DependencyContainer;
+namespace Xamani\DependencyContainer;
 
 trait HasChildFields
 {
@@ -32,14 +32,25 @@ trait HasChildFields
     protected function applyRulesForChildFields($childField)
     {
         if (isset($childField->rules)) {
-            $childField->rules[] = "sometimes:required:".$childField->attribute;
+            $childField->rules = $this->ensureSometimesRule($childField->rules);
         }
         if (isset($childField->creationRules)) {
-            $childField->creationRules[] = "sometimes:required:".$childField->attribute;
+            $childField->creationRules = $this->ensureSometimesRule($childField->creationRules);
         }
         if (isset($childField->updateRules)) {
-            $childField->updateRules[] = "sometimes:required:".$childField->attribute;
+            $childField->updateRules = $this->ensureSometimesRule($childField->updateRules);
         }
+
         return $childField;
+    }
+
+    protected function ensureSometimesRule(array|string $rules): array
+    {
+        $rulesArray = is_array($rules) ? $rules : [$rules];
+        if (!in_array('sometimes', $rulesArray, true)) {
+            array_unshift($rulesArray, 'sometimes');
+        }
+
+        return $rulesArray;
     }
 }

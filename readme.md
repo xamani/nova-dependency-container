@@ -1,33 +1,33 @@
-# nova 4 dependency container
+# nova dependency container
 
-A Laravel Nova 4 form container for grouping fields that depend on other field values.
+A Laravel Nova form container for grouping fields that depend on other field values.
 Dependencies can be set on any field type or value.
 
 Features:
 
 - working form validation inside unlimited nested containers
-- support of ebess/advanced-nova-media-library
+- optional support of `ebess/advanced-nova-media-library`
 
 This plugin is based on [epartment/nova-dependency-container](https://github.com/epartment/nova-dependency-container)
 and only supports **Nova 4.x** and **Nova 5.x** and **PHP 8.x**.
 
 ## Demo
 
-![Demo](https://raw.githubusercontent.com/alexwenzel/nova-dependency-container/master/docs/demo.gif)
+![Demo](docs/demo.gif)
 
 ## Installation
 
 The package can be installed through Composer.
 
 ```bash
-composer require alexwenzel/nova-dependency-container
+composer require xamani/nova-dependency-container
 ```
 
 ## Usage
 
-1. Add the `Alexwenzel\DependencyContainer\HasDependencies` trait to your Nova Resource.
-2. Add the `Alexwenzel\DependencyContainer\DependencyContainer` to your Nova Resource `fields()` method.
-3. Add the `Alexwenzel\DependencyContainer\ActionHasDependencies` trait to your Nova Actions that you wish to use
+1. Add the `Xamani\DependencyContainer\HasDependencies` trait to your Nova Resource.
+2. Add the `Xamani\DependencyContainer\DependencyContainer` to your Nova Resource `fields()` method.
+3. Add the `Xamani\DependencyContainer\ActionHasDependencies` trait to your Nova Actions that you wish to use
    dependencies on.
 
 ```php
@@ -80,7 +80,7 @@ supported, `BelongsTo` and `MorphTo`.
 
 Here is an example using a checkbox:
 
-![Demo](https://raw.githubusercontent.com/alexwenzel/nova-dependency-container/master/docs/demo-2.gif)
+![Demo](docs/demo-2.gif)
 
 ## BelongsTo dependency
 
@@ -249,4 +249,4 @@ Text::make('Parent name', 'parent_id'),
 ## License
 
 The MIT License (MIT). Please
-see [License File](https://github.com/alexwenzel/nova-dependency-container/blob/master/LICENSE.md) for more information.
+see `LICENSE.md` for more information.

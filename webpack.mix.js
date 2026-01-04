@@ -7,4 +7,4 @@ mix
   .setPublicPath('dist')
   .js('resources/js/field.js', 'js')
   .vue({ version: 3 })
-  .nova('alexwenzel/dependency-container')
+  .nova('xamani/nova-dependency-container')
