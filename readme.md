@@ -9,7 +9,7 @@ Features:
 - support of ebess/advanced-nova-media-library
 
 This plugin is based on [epartment/nova-dependency-container](https://github.com/epartment/nova-dependency-container)
-and only supports **Nova 4.x** and **PHP 8.x**.
+and only supports **Nova 4.x** and **Nova 5.x** and **PHP 8.x**.
 
 ## Demo
 
